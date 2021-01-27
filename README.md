@@ -20,3 +20,4 @@ example:
 1. keys of the rule object cannot be substituted, it must be used as it is
 2. All values of all keys are strings
 # live
+https://valid123.herokuapp.com/
