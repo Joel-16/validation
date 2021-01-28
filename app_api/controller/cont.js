@@ -12,153 +12,151 @@ module.exports.input=(req,res)=>{
          }
       }
    }
-   var data=req.body.data
-   var rule=req.body.rule
-
-   if (!rule){
-      err(res, 'rule is required.')
-   }
-   if (!data){
-      err(res, 'data is required.')
-   }if(typeof rule!=='object'){
-      err(res, 'rule should be an object.')
-   }if (rule.field===0){
-      err(res, 'rule.field sould be a string.')}
-   if (!rule.field){
-      err(res, 'field dosent exist and is required.')
-   }if (typeof rule.field !=='string'){
-      err(res,'rule.field sould be a string')
-   }
-   if (!(data[rule.field])){
-      message=rule.field+' field is missing from data provided.'
-      err(res, message)
-   }if(!rule.condition){
-      err(res, 'condition dosent exist and is required.')
-   }if(!rule.condition_value){
-      err(res, 'condition_value dosent exist and is required.')
-   }
-   if (typeof rule.field !=='string' && Array.isArray(data) !=='true'){
-      err(res, 'field should be a string.')
-   }
-   if (typeof rule.condition !=='string'){
-      err(res, 'your rule_condition should be a string.')
-   }
-   if (typeof data ==='object'){
-      if (rule.condition==='eq'){
-         if (data[rule.field]===rule.condition_value){
-            success(res,rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="neq"){
-         if (data[rule.field]!==rule.condition_value){
-            success(res,rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="gt"){
-         if (data[rule.field]>rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="gte"){
-         if (data[rule.field]>=rule.condition_value){
-            success(res,rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="contains"){
-         if (data[rule.field].includes(rule.condition_value)){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else{
-         ans.message='your rule_condition should contain any of these arguments [eq, neq, gt, gte, contains].'
-         ans.status='error'
-         ans.data=null
-         response(res, ans)
+   if (req.body){
+      var data=req.body.data
+      var rule=req.body.rule
+   
+      if (!rule){
+         err(res, 'rule is required.')
       }
-   }else if (typeof data === 'string'){
-      if (rule.condition==='eq'){
-         if (data[parseInt(rule.field)]===rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="neq"){
-         if (data[parseInt(rule.field)]!==rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="gt"){
-         if (data[parseInt(rule.field)]>rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="gte"){
-         if (data[parseInt(rule.field)]>=rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="contains"){
-         if (data[parseInt(rule.field)].includes(rule.condition_value)){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else{
-         ans.message='your rule_condition should contain any of these arguments [eq, neq, gt, gte, contains].'
-         ans.status='error'
-         ans.data=null
-         response(res, ans)
+      if (!data){
+         err(res, 'data is required.')
+      }if(typeof rule!=='object'){
+         err(res, 'rule should be an object.')
+      }if (rule.field===0){
+         err(res, 'rule.field sould be a string.')}
+      if (!rule.field){
+         err(res, 'field dosent exist and is required.')
+      }if (typeof rule.field !=='string'){
+         err(res,'rule.field sould be a string')
       }
-   }else if(Array.isArray(data)){
-      if (rule.condition==='eq'){
-         if (data[parseInt(rule.field)]===rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+      if (!(data[rule.field])){
+         message=rule.field+' field is missing from data provided.'
+         err(res, message)
+      }if(!rule.condition){
+         err(res, 'condition dosent exist and is required.')
+      }if(!rule.condition_value){
+         err(res, 'condition_value dosent exist and is required.')
+      }
+      if (typeof rule.field !=='string' && Array.isArray(data) !=='true'){
+         err(res, 'field should be a string.')
+      }
+      if (typeof rule.condition !=='string'){
+         err(res, 'your rule_condition should be a string.')
+      }
+      if (typeof data ==='object'){
+         if (rule.condition==='eq'){
+            if (data[rule.field]===rule.condition_value){
+               success(res,rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="neq"){
+            if (data[rule.field]!==rule.condition_value){
+               success(res,rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="gt"){
+            if (data[rule.field]>rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="gte"){
+            if (data[rule.field]>=rule.condition_value){
+               success(res,rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res,rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="contains"){
+            if (data[rule.field].includes(rule.condition_value)){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
          }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            ans.message='your rule_condition should contain any of these arguments [eq, neq, gt, gte, contains].'
+            ans.status='error'
+            ans.data=null
+            response(res, ans)
          }
-      }else if (rule.condition==="neq"){
-         if (data[parseInt(rule.field)]!==rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+      }else if (typeof data === 'string'){
+         if (rule.condition==='eq'){
+            if (data[parseInt(rule.field)]===rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="neq"){
+            if (data[parseInt(rule.field)]!==rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="gt"){
+            if (data[parseInt(rule.field)]>rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="gte"){
+            if (data[parseInt(rule.field)]>=rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="contains"){
+            if (data[parseInt(rule.field)].includes(rule.condition_value)){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
          }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            ans.message='your rule_condition should contain any of these arguments [eq, neq, gt, gte, contains].'
+            ans.status='error'
+            ans.data=null
+            response(res, ans)
          }
-      }else if (rule.condition==="gt"){
-         if (data[parseInt(rule.field)]>rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+      }else if(Array.isArray(data)){
+         if (rule.condition==='eq'){
+            if (data[parseInt(rule.field)]===rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="neq"){
+            if (data[parseInt(rule.field)]!==rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="gt"){
+            if (data[parseInt(rule.field)]>rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="gte"){
+            if (data[parseInt(rule.field)]>=rule.condition_value){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
+         }else if (rule.condition==="contains"){
+            if (data[parseInt(rule.field)].includes(rule.condition_value)){
+               success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
+            }else{
+               failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            }
          }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="gte"){
-         if (data[parseInt(rule.field)]>=rule.condition_value){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
-         }
-      }else if (rule.condition==="contains"){
-         if (data[parseInt(rule.field)].includes(rule.condition_value)){
-            success(res, rule.field, data[rule.field], rule.condition, rule.condition_value)    
-         }else{
-            failure(res, rule.field, data[rule.field], rule.condition, rule.condition_value)  
+            err(res,'your rule_condition should contain any of these arguments [eq, neq, gt, gte, contains].')
          }
       }else{
-         ans.message='your rule_condition should contain any of these arguments [eq, neq, gt, gte, contains].'
-         ans.status='error'
-         ans.data=null
-         response(res, ans)
+         err(res,"your data is of the wrong format.")
       }
    }else{
-      ans.message='your data is of the wrong format.'
-      ans.status='error'
-      ans.data=null
-      response(res, ans)
+      err(res,"You didnt supply any payload.")
    }
 }
 
