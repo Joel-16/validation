@@ -168,7 +168,7 @@ module.exports.output=(req,res)=>{
          name: 'Joel Dan Inaku',
          github: '@Joel-16',
          email: 'inakujoel16@gmail.com',
-         mobile: '+2349065942500',
+         mobile: '09065942500',
          twitter: '@inaku_joel'
       }
    }
