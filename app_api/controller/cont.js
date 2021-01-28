@@ -22,7 +22,9 @@ module.exports.input=(req,res)=>{
       err(res, 'data is required.')
    }if(typeof rule!=='object'){
       err(res, 'rule should be an object.')
-   }if (!rule.field){
+   }if (rule.field===0){
+      err(res, 'rule.field sould be a string.')}
+   if (!rule.field){
       err(res, 'field dosent exist and is required.')
    }if (typeof rule.field !=='string'){
       err(res,'rule.field sould be a string')
